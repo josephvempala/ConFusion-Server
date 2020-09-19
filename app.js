@@ -8,13 +8,16 @@ const passport = require('passport');
 const authenticate = require('./authenticate');
 const FileStore = require('session-file-store')(session);
 const mongoose=require('mongoose');
-const config=require('./config')
+const config=require('./config');
+const cors = require('./cors');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const dishRouter = require('./routes/dishRouter');
 const promoRouter = require('./routes/promoRouter');
 const leaderRouter = require('./routes/leaderRouter');
+const uploadRouter = require('./routes/uploadRouter');
+const favouriteRouter = require('./routes/favouriteRouter');
 
 const url = config.mongoUrl;
 const app = express();
@@ -35,6 +38,8 @@ app.use('/users', usersRouter);
 app.use('/dishes',dishRouter);
 app.use('/leaders',leaderRouter);
 app.use('/promotions', promoRouter);
+app.use('/imageUpload',uploadRouter);
+app.use('/favourites', favouriteRouter);
 
 //connecting to mongodb
 const connect=mongoose.connect(url,{ useFindAndModify: false,useNewUrlParser: true })

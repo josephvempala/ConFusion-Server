@@ -5,12 +5,14 @@ const mongoose=require('mongoose');
 var User=require('../models/user');
 var passport = require('passport');
 var router=express.Router();
-var authenticate = require('../authenticate')
+var cors=require('../cors')
+var authenticate = require('../authenticate');
 router.use(bodyparser.json());
 
 
 /* GET users listing. */
-router.get('/',authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+router.options('/',cors.corsWithOptions, (req, res) => { res.sendStatus(200); });
+router.get('/',cors.cors,authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
   User.find({})
   .then((users)=>{
     res.statusCode=200;
@@ -21,8 +23,8 @@ router.get('/',authenticate.verifyUser, authenticate.verifyAdmin, (req, res, nex
     next(err);
   })
 });
-
-router.post('/signup',(req,res,next) => {
+router.options('/signup',cors.corsWithOptions, (req, res) => { res.sendStatus(200); });
+router.post('/signup',cors.corsWithOptions,(req,res,next) => {
   console.log('register called');
   User.register(new User({username:req.body.username}),
   req.body.password, (err,user) => {
@@ -52,7 +54,8 @@ router.post('/signup',(req,res,next) => {
     }
   });
 });
-router.post('/login', passport.authenticate('local'), (req,res)=>{
+router.options('/login',cors.corsWithOptions, (req, res) => { res.sendStatus(200); });
+router.post('/login',cors.corsWithOptions, passport.authenticate('local'), (req,res)=>{
   var token = authenticate.getToken({_id:req.user._id});
   res.statusCode=200;
   res.setHeader('Content-Type','application/json');
