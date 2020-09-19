@@ -126,7 +126,7 @@ favouriteRouter.route('/:dishId')
     },(err)=>next(err))
 })
 .delete(cors.corsWithOptions,authenticate.verifyUser,(req,res,next)=>{
-    Favourites.findOne({user:req.user._id})
+    Favourites.findOneAndRemove({user:req.user._id,dish:req.params.dishId})
     .then((favourites)=>{
         if(!favourites){
             err = new Error('no favourites');
@@ -134,22 +134,11 @@ favouriteRouter.route('/:dishId')
             return next(err);
         }
         else{
-            let index = favourites.dish.indexOf(req.params.dishId);
-            if(index==-1){
-                err = new Error('no such favourite');
-                err.status = 404;
-                return next(err);
-            }
-            else{
-                delete favourites.dish[index];
-                favourites.save()
-                .then((favourites)=>{
-                    res.statusCode = 200;
-                    res.json(favourites);
-                })
-            }
+            res.statusCode = 200;
+            res.json(favourites);
         }
     })
+    .catch(err=>next(err))
 })
 
 module.exports=favouriteRouter;
