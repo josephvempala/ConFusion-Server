@@ -30,53 +30,32 @@ favouriteRouter.route('/')
     Favourites.findOne({user:req.user._id})
     .then((favourites)=>{
         if(!favourites){
-            Favourites.create({user:req.user._id})
-            .then((favourites) => {
-                for(let i in req.body){
-                    for(let j in favourites.dish){
-                        if(i._id==j){
-                            continue;
-                        }
-                        else{
-                            favourites.dish.push(i._id);
-                        }
-                    }
+            Favourites.create({user:req.user._id,dish:[]})
+            .then((favourites)=>{
+                for (i of req.body){
+                    if((favourites.dish.indexOf(Object.values(i)[0])==-1))
+                    favourites.dish.push(Object.values(i)[0]);
                 }
                 favourites.save()
-                    .then((favourites)=>{
-                    console.log('Favourites Created ', favourites);
-                    res.statusCode = 200;
-                    res.setHeader('Content-Type', 'application/json');
+                .then((favourites)=>{
+                    res.statusCode=200;
+                    res.setHeader('Content-Type','application/json')
                     res.json(favourites);
-                    })
-                    .catch((err)=>{
-                        next(err);
-                    })
-            })
-            .catch((err) => next(err));
+                })
+            },err=>next(err))
         }
         else{
-            for(let i in req.body){
-                for(let j in favourites.dish){
-                    if(i._id==j){
-                        continue;
-                    }
-                    else{
-                        favourites.dish.push(i._id);
-                    }
-                }
+            for (i of req.body){
+                if((favourites.dish.indexOf(Object.values(i)[0])==-1))
+                favourites.dish.push(Object.values(i)[0]);
             }
             favourites.save()
-            .then((favourites) => {
-                    res.statusCode = 200;
-                    res.setHeader('Content-Type', 'application/json');
-                    res.json(favourites);               
-            }, (err) => next(err));
-    
+            .then((favourites)=>{
+                res.statusCode=200;
+                res.setHeader('Content-Type','application/json')
+                res.json(favourites);
+            })
         }
-    })
-    .catch((err)=>{
-        next(err);
     })
 })
 .delete(cors.corsWithOptions,authenticate.verifyUser,(req,res,next)=>{
