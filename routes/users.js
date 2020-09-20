@@ -54,11 +54,31 @@ router.post('/signup',cors.corsWithOptions,(req,res,next) => {
     }
   });
 });
+router.put('/signup',cors.corsWithOptions, (req,res)=>{
+  res.statusCode=403;
+  res.send('put operation not supported on signup endpoint');
+});
+router.delete('/signup',cors.corsWithOptions, (req,res)=>{
+  res.statusCode=403;
+  res.send('delete operation not supported on signup endpoint');
+});
 router.options('/login',cors.corsWithOptions, (req, res) => { res.sendStatus(200); });
+router.get('/login',cors.corsWithOptions, (req,res)=>{
+  res.statusCode=403;
+  res.send('get operation not supported on login endpoint');
+});
+router.put('/login',cors.corsWithOptions, (req,res)=>{
+  res.statusCode=403;
+  res.send('put operation not supported on login endpoint');
+});
 router.post('/login',cors.corsWithOptions, passport.authenticate('local'), (req,res)=>{
   var token = authenticate.getToken({_id:req.user._id});
   res.statusCode=200;
   res.setHeader('Content-Type','application/json');
   res.json({success:true, token:token, status:'Login Successful!'});
+});
+router.delete('/login',cors.corsWithOptions, (req,res)=>{
+  res.statusCode=403;
+  res.send('delete operation not supported on login endpoint');
 });
 module.exports = router;
