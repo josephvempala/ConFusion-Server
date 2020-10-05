@@ -17,7 +17,8 @@ const dishRouter = require('./routes/dishRouter');
 const promoRouter = require('./routes/promoRouter');
 const leaderRouter = require('./routes/leaderRouter');
 const uploadRouter = require('./routes/uploadRouter');
-const favouriteRouter = require('./routes/favouriteRouter');
+const favoriteRouter = require('./routes/favoriteRouter');
+const commentRouter = require('./routes/commentRouter');
 
 const url = config.mongoUrl;
 const app = express();
@@ -39,7 +40,8 @@ app.use('/dishes',dishRouter);
 app.use('/leaders',leaderRouter);
 app.use('/promotions', promoRouter);
 app.use('/imageUpload',uploadRouter);
-app.use('/favourites', favouriteRouter);
+app.use('/favorites', favoriteRouter);
+app.use('/comments', commentRouter);
 
 //connecting to mongodb
 const connect=mongoose.connect(url,{ useFindAndModify: false,useNewUrlParser: true })
