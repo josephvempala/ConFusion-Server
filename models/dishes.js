@@ -1,8 +1,8 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 require('mongoose-currency').loadType(mongoose);
 
-const Currency= mongoose.Types.Currency;
-const Schema=mongoose.Schema;
+const Currency = mongoose.Types.Currency;
+const Schema = mongoose.Schema;
 
 const dishSchema = new Schema({
     name: {
@@ -33,11 +33,11 @@ const dishSchema = new Schema({
     },
     featured: {
         type: Boolean,
-        default:false      
+        default: false
     }
 }, {
     timestamps: true
 });
 
-const Dishes=mongoose.model('dish',dishSchema);
+const Dishes = mongoose.model('dish', dishSchema);
 module.exports = Dishes;

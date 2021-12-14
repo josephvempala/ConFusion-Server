@@ -1,29 +1,29 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 require('mongoose-currency').loadType(mongoose);
 
-const Schema=mongoose.Schema;
+const Schema = mongoose.Schema;
 var commentSchema = new Schema({
-    rating:  {
+    rating: {
         type: Number,
         min: 1,
         max: 5,
         required: true
     },
-    comment:  {
+    comment: {
         type: String,
         required: true
     },
-    author:  {
+    author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    dish:{
+    dish: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'dish'
+        ref: 'dish'
     }
 }, {
     timestamps: true
 });
 
-var Comments = mongoose.model('Comment',commentSchema);
-module.exports= Comments;
+var Comments = mongoose.model('Comment', commentSchema);
+module.exports = Comments;
