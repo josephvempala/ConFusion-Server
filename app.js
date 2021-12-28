@@ -19,18 +19,16 @@ const leaderRouter = require('./routes/leaderRouter');
 const uploadRouter = require('./routes/uploadRouter');
 const favoriteRouter = require('./routes/favoriteRouter');
 const commentRouter = require('./routes/commentRouter');
+const feedbackRouter = require('./routes/feedbackRouter');
 
 const url = config.mongoUrl;
 const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-//app.use(cookieParser());
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -42,9 +40,10 @@ app.use('/promotions', promoRouter);
 app.use('/imageUpload', uploadRouter);
 app.use('/favorites', favoriteRouter);
 app.use('/comments', commentRouter);
+app.use('/feedback', feedbackRouter);
 
 //connecting to mongodb
-const connect = mongoose.connect(url, {useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true})
+const connect = mongoose.connect(url, {useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
 
 connect.then((db) => {
     console.log('Connected to db successfully');
