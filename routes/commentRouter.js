@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-var authenticate = require('../authenticate');
+const authenticate = require('../authenticate');
 const cors = require('../cors');
 
 const Comments = require('../models/comments');

@@ -1,12 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
-var User = require('../models/user');
-var passport = require('passport');
-var router = express.Router();
-var cors = require('../cors')
-var authenticate = require('../authenticate');
+const User = require('../models/user');
+const passport = require('passport');
+const cors = require('../cors')
+const authenticate = require('../authenticate');
 router.use(bodyparser.json());
 
 
@@ -92,7 +91,7 @@ router.post('/login', cors.corsWithOptions, (req, res, next) => {
                 res.setHeader('Content-Type', 'application/json');
                 res.json({success: false, status: 'Login Unsuccessful!', err: 'Could not log in user'});
             }
-            var token = authenticate.getToken({_id: req.user._id});
+            const token = authenticate.getToken({_id: req.user._id});
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json({success: true, status: 'Login Successful!', token: token});
