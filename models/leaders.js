@@ -3,7 +3,7 @@ require('mongoose-currency').loadType(mongoose);
 
 const Schema = mongoose.Schema;
 
-let LeaderSchema = new Schema({
+const LeaderSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -32,5 +32,5 @@ let LeaderSchema = new Schema({
     timestamps: true
 });
 
-let Leaders = mongoose.model('leader', LeaderSchema);
+const Leaders = mongoose.model('leader', LeaderSchema);
 module.exports = Leaders;

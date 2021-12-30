@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('mongoose-currency').loadType(mongoose);
 
 const Schema = mongoose.Schema;
-var commentSchema = new Schema({
+const commentSchema = new Schema({
     rating: {
         type: Number,
         min: 1,
@@ -25,5 +25,5 @@ var commentSchema = new Schema({
     timestamps: true
 });
 
-var Comments = mongoose.model('Comment', commentSchema);
+const Comments = mongoose.model('Comment', commentSchema);
 module.exports = Comments;

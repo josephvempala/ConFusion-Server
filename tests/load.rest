@@ -61,7 +61,7 @@ Authorization: bearer {{login.response.body.token}}
     "label":"New",
     "price":"1.99",
     "featured": false,
-    "description":"A quintessential ConFusion experience, is it a vada or is it a donut?"
+    "description":"A quintessential Di Udupi experience, is it a vada or is it a donut?"
 }
 ###
 #addDish
