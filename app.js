@@ -24,7 +24,7 @@ const feedbackRouter = require('./routes/feedbackRouter');
 const url = config.mongoUrl;
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'),{maxAge:86400000 * 30}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
