@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('./models/user');
+const User = require('./src/models/user');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
@@ -35,11 +35,11 @@ exports.jwtPassport = passport.use(new JwtStrategy(opts,
     }));
 
 exports.verifyAdmin = (req, res, next) => {
-    if (req.user.admin == true) {
+    if (req.user.admin === true) {
         next();
     } else {
         res.send("Not an Authorized for this action");
-        err = new Error('You are unauthorised to do this action');
+        const err = new Error('You are unauthorised to do this action');
         err.status = 401;
         next(err);
     }

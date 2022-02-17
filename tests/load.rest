@@ -1,4 +1,3 @@
-@authToken = {{login.response.headers.X-AuthToken}}
 #signup
 POST http://localhost:3001/users/signup/
 Content-Type: application/json
@@ -18,15 +17,18 @@ Content-Type: application/json
     "username":"joe",
     "password":"test"
 }
+> {%
+client.global.set('authToken', response.body.token);
+%}
 ###
 #addDish
 POST http://localhost:3001/dishes/
 Content-Type: application/json
-Authorization: bearer {{login.response.body.token}}
+Authorization: bearer {{authToken}}
 
 {
     "name":"Uthappizza",
-    "image": "/images/uthappizza.png",
+    "image": "/images/uthapizza.jpg",
     "category": "mains",
     "label":"Hot",
     "price":"4.99",
@@ -37,7 +39,7 @@ Authorization: bearer {{login.response.body.token}}
 #addDish
 POST http://localhost:3001/dishes/
 Content-Type: application/json
-Authorization: bearer {{login.response.body.token}}
+Authorization: bearer {{authToken}}
 
 {
     "name":"Zucchipakoda",
@@ -52,7 +54,7 @@ Authorization: bearer {{login.response.body.token}}
 #addDish
 POST http://localhost:3001/dishes/
 Content-Type: application/json
-Authorization: bearer {{login.response.body.token}}
+Authorization: bearer {{authToken}}
 
 {
     "name":"Vadonut",
@@ -67,7 +69,7 @@ Authorization: bearer {{login.response.body.token}}
 #addDish
 POST http://localhost:3001/dishes/
 Content-Type: application/json
-Authorization: bearer {{login.response.body.token}}
+Authorization: bearer {{authToken}}
 
 {
     "name":"ElaiCheese Cake",
@@ -82,7 +84,7 @@ Authorization: bearer {{login.response.body.token}}
 #addLeader
 POST http://localhost:3001/leaders/
 Content-Type: application/json
-Authorization: bearer {{login.response.body.token}}
+Authorization: bearer {{authToken}}
 
 {
     "name": "Peter Pan",
@@ -96,7 +98,7 @@ Authorization: bearer {{login.response.body.token}}
 #addLeader
 POST http://localhost:3001/leaders/
 Content-Type: application/json
-Authorization: bearer {{login.response.body.token}}
+Authorization: bearer {{authToken}}
 
 {
     "name": "Dhanasekaran Witherspoon",
@@ -110,7 +112,7 @@ Authorization: bearer {{login.response.body.token}}
 #addLeader
 POST http://localhost:3001/leaders/
 Content-Type: application/json
-Authorization: bearer {{login.response.body.token}}
+Authorization: bearer {{authToken}}
 
 {
     "name": "Alberto Somayya",
@@ -119,4 +121,20 @@ Authorization: bearer {{login.response.body.token}}
     "abbr": "EC",
     "featured": true,
     "description": "Award winning three-star Michelin chef with wide International experience having worked closely with whos-who in the culinary world, he specializes in creating mouthwatering Indo-Italian fusion experiences. He says, Put together the cuisines from the two craziest cultures, and you get a winning hit! Amma Mia!"
+}
+
+###
+#addPromotion
+POST http://localhost:3001/promotions
+Content-Type: application/json
+Authorization: bearer {{authToken}}
+
+{
+  "name": "Weekend Grand Buffet",
+  "image": "/images/weekendgrandbuffet.jpg",
+  "label": "New",
+  "price": "19.99",
+  "featured": true,
+  "description": "Featuring mouthwatering combinations with a choice of five different salads, six enticing appetizers, six main entrees and five choicest desserts. Free flowing bubbly and soft drinks. All for just $19.99 per person"
+
 }
