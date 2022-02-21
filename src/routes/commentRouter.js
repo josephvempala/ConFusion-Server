@@ -8,18 +8,20 @@ const {
     deleteComment,
     getCommentById,
     patchCommentById,
-    deleteCommentById
-} = require("../controllers/comments");
+    deleteCommentById,
+} = require('../controllers/comments');
 
 const commentRouter = express.Router();
 
-commentRouter.route('/')
+commentRouter
+    .route('/')
     .options(cors.corsWithOptions, commentsOptions)
     .get(cors.cors, getComments)
     .post(cors.corsWithOptions, authenticate.verifyUser, postComment)
     .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, deleteComment);
 
-commentRouter.route('/:id')
+commentRouter
+    .route('/:id')
     .options(cors.corsWithOptions, commentsOptions)
     .get(cors.cors, getCommentById)
     .patch(cors.corsWithOptions, authenticate.verifyUser, patchCommentById)

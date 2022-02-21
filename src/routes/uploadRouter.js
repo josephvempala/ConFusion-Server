@@ -1,11 +1,12 @@
 const express = require('express');
 const authenticate = require('../../authenticate');
 const cors = require('../../cors');
-const {upload} = require("../controllers/uploads");
+const {upload} = require('../controllers/uploads');
 
 const uploadRouter = express.Router();
 
-uploadRouter.route('/')
+uploadRouter
+    .route('/')
     .options(cors.corsWithOptions, (req, res) => {
         res.sendStatus(200);
     })

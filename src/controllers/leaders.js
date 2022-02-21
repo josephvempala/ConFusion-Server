@@ -2,18 +2,18 @@ const Leaders = require('../models/leaders');
 
 const leaderOptions = (req, res) => {
     res.sendStatus(200);
-}
+};
 
 const getLeaders = async (req, res, next) => {
     try {
-        const leaders = await Leaders.find(req.query);
+        const leaders = await Leaders.find(req.query).lean();
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(leaders);
     } catch (e) {
         next(e);
     }
-}
+};
 
 const postLeader = async (req, res, next) => {
     try {
@@ -24,47 +24,47 @@ const postLeader = async (req, res, next) => {
     } catch (e) {
         next(e);
     }
-}
+};
 
 const deleteLeaders = async (req, res) => {
-    const result = await Leaders.remove({});
+    const result = await Leaders.deleteMany({});
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.json(result);
-}
+};
 
 const getLeaderByParam = async (req, res, next) => {
     try {
-        const leader = await Leaders.findById(req.params.id);
+        const leader = await Leaders.findById(req.params.id).lean();
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(leader);
     } catch (e) {
         next(e);
     }
-}
+};
 
 const patchLeaderByParam = async (req, res, next) => {
     try {
-        const updatedLeader = await Leaders.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true});
+        const updatedLeader = await Leaders.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true}).lean();
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(updatedLeader);
     } catch (e) {
         next(e);
     }
-}
+};
 
 const deleteLeaderByParam = async (req, res, next) => {
     try {
-        const result = await Leaders.findByIdAndRemove(req.params.id);
+        const result = await Leaders.findByIdAndDelete(req.params.id);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(result);
     } catch (e) {
         next(e);
     }
-}
+};
 
 module.exports = {
     deleteLeaderByParam,
@@ -73,5 +73,5 @@ module.exports = {
     getLeaders,
     leaderOptions,
     patchLeaderByParam,
-    postLeader
-}
+    postLeader,
+};

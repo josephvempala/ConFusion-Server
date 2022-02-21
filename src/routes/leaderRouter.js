@@ -1,5 +1,5 @@
 const express = require('express');
-const authenticate = require('../../authenticate')
+const authenticate = require('../../authenticate');
 const cors = require('../../cors');
 const {
     leaderOptions,
@@ -8,18 +8,20 @@ const {
     deleteLeaders,
     getLeaderByParam,
     patchLeaderByParam,
-    deleteLeaderByParam
-} = require("../controllers/leaders");
+    deleteLeaderByParam,
+} = require('../controllers/leaders');
 
 const leaderRouter = express.Router();
 
-leaderRouter.route('/')
+leaderRouter
+    .route('/')
     .options(cors.corsWithOptions, leaderOptions)
     .get(cors.cors, getLeaders)
     .post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, postLeader)
     .delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, deleteLeaders);
 
-leaderRouter.route('/:id')
+leaderRouter
+    .route('/:id')
     .options(cors.corsWithOptions, leaderOptions)
     .get(cors.cors, getLeaderByParam)
     .patch(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, patchLeaderByParam)

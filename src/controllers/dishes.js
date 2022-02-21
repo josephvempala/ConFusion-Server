@@ -2,18 +2,18 @@ const Dishes = require('../models/dishes');
 
 const dishesOptions = (req, res) => {
     res.sendStatus(200);
-}
+};
 
 const getDishes = async (req, res, next) => {
     try {
-        const dishes = await Dishes.find(req.query).populate('comments.author');
+        const dishes = await Dishes.find(req.query).populate('comments.author').lean();
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(dishes);
     } catch (e) {
         next(e);
     }
-}
+};
 
 const postDish = async (req, res, next) => {
     try {
@@ -24,53 +24,57 @@ const postDish = async (req, res, next) => {
     } catch (e) {
         next(e);
     }
-}
+};
 
 const deleteDish = async (req, res, next) => {
     try {
-        const result = await Dishes.remove({});
+        const result = await Dishes.deleteMany({});
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(result);
     } catch (e) {
         next(e);
     }
-}
+};
 
 const getDishById = async (req, res, next) => {
     try {
-        const dish = await Dishes.findById(req.params.id).populate('comments.author');
+        const dish = await Dishes.findById(req.params.id).populate('comments.author').lean();
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(dish);
     } catch (e) {
         next(e);
     }
-}
+};
 
 const patchDishById = async (req, res, next) => {
     try {
-        const result = await Dishes.findByIdAndUpdate(req.params.id, {
-            $set: req.body
-        }, {new: true});
+        const result = await Dishes.findByIdAndUpdate(
+            req.params.id,
+            {
+                $set: req.body,
+            },
+            {new: true},
+        ).lean();
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(result);
     } catch (e) {
         next(e);
     }
-}
+};
 
 const deleteDishById = async (req, res, next) => {
     try {
-        const result = await Dishes.findByIdAndRemove(req.params.id);
+        const result = await Dishes.findByIdAndDelete(req.params.id);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(result);
     } catch (e) {
         next(e);
     }
-}
+};
 
 module.exports = {
     dishesOptions,
@@ -79,5 +83,5 @@ module.exports = {
     getDishById,
     getDishes,
     patchDishById,
-    postDish
-}
+    postDish,
+};
