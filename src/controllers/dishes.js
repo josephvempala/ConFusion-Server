@@ -6,7 +6,7 @@ const dishesOptions = (req, res) => {
 
 const getDishes = async (req, res, next) => {
     try {
-        const dishes = await Dishes.find(req.query).populate('comments.author').lean();
+        const dishes = await Dishes.find(req.query).populate('comments.author');
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(dishes);
@@ -39,7 +39,7 @@ const deleteDish = async (req, res, next) => {
 
 const getDishById = async (req, res, next) => {
     try {
-        const dish = await Dishes.findById(req.params.id).populate('comments.author').lean();
+        const dish = await Dishes.findById(req.params.id).populate('comments.author');
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(dish);
@@ -56,7 +56,7 @@ const patchDishById = async (req, res, next) => {
                 $set: req.body,
             },
             {new: true},
-        ).lean();
+        );
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(result);

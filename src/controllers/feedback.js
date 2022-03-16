@@ -6,7 +6,7 @@ const feedbackOptions = (req, res) => {
 
 const getFeedback = async (req, res, next) => {
     try {
-        const feedback = await Feedback.find(req.query).populate('comments.author').lean();
+        const feedback = await Feedback.find(req.query).populate('comments.author');
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(feedback);

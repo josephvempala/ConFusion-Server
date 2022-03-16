@@ -28,7 +28,7 @@ Authorization: bearer {{authToken}}
 
 {
     "name":"Uthappizza",
-    "image": "/images/uthapizza.jpg",
+    "image": "/images/uthapizza.webp",
     "category": "mains",
     "label":"Hot",
     "price":"4.99",
@@ -43,7 +43,7 @@ Authorization: bearer {{authToken}}
 
 {
     "name":"Zucchipakoda",
-    "image": "/images/zucchipakoda.png",
+    "image": "/images/zucchipakoda.webp",
     "category": "appetizer",
     "label":"",
     "price":"1.99",
@@ -58,7 +58,7 @@ Authorization: bearer {{authToken}}
 
 {
     "name":"Vadonut",
-    "image": "/images/vadonut.png",
+    "image": "/images/vadonut.webp",
     "category": "appetizer",
     "label":"New",
     "price":"1.99",
@@ -73,7 +73,7 @@ Authorization: bearer {{authToken}}
 
 {
     "name":"ElaiCheese Cake",
-    "image": "/images/elaicheesecake.png",
+    "image": "/images/elaicheesecake.webp",
     "category": "dessert",
     "label":"",
     "price":"2.99",
@@ -88,7 +88,7 @@ Authorization: bearer {{authToken}}
 
 {
     "name": "Peter Pan",
-    "image": "/images/alberto.png",
+    "image": "/images/alberto.webp",
     "designation": "Chief Epicurious Officer",
     "abbr": "CEO",
     "featured": false,
@@ -102,7 +102,7 @@ Authorization: bearer {{authToken}}
 
 {
     "name": "Dhanasekaran Witherspoon",
-    "image": "/images/alberto.png",
+    "image": "/images/alberto.webp",
     "designation": "Chief Food Officer",
     "abbr": "CFO",
     "featured": false,
@@ -116,7 +116,7 @@ Authorization: bearer {{authToken}}
 
 {
     "name": "Alberto Somayya",
-    "image": "/images/alberto.png",
+    "image": "/images/alberto.webp",
     "designation": "Executive Chef",
     "abbr": "EC",
     "featured": true,
@@ -131,7 +131,7 @@ Authorization: bearer {{authToken}}
 
 {
   "name": "Weekend Grand Buffet",
-  "image": "/images/weekendgrandbuffet.jpg",
+  "image": "/images/weekendgrandbuffet.webp",
   "label": "New",
   "price": "19.99",
   "featured": true,

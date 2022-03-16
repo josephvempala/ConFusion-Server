@@ -5,24 +5,20 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
 
-const config = require('./config');
-
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 exports.getToken = (user) => {
-    return jwt.sign(user, config.secretKey,
-        {expiresIn: 3600});
-}
+    return jwt.sign(user, process.env.SECRETKEY, {expiresIn: 3600});
+};
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = config.secretKey;
+opts.secretOrKey = process.env.SECRETKEY;
 
-exports.jwtPassport = passport.use(new JwtStrategy(opts,
-    (jwt_payload, done) => {
-        console.log("JWT payload: ", jwt_payload);
+exports.jwtPassport = passport.use(
+    new JwtStrategy(opts, (jwt_payload, done) => {
         User.findOne({_id: jwt_payload._id}, (err, user) => {
             if (err) {
                 return done(err, false);
@@ -32,17 +28,18 @@ exports.jwtPassport = passport.use(new JwtStrategy(opts,
                 return done(null, false);
             }
         });
-    }));
+    }),
+);
 
 exports.verifyAdmin = (req, res, next) => {
     if (req.user.admin === true) {
         next();
     } else {
-        res.send("Not an Authorized for this action");
+        res.send('Not an Authorized for this action');
         const err = new Error('You are unauthorised to do this action');
         err.status = 401;
         next(err);
     }
-}
+};
 
 exports.verifyUser = passport.authenticate('jwt', {session: false});

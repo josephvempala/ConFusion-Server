@@ -6,7 +6,7 @@ const commentsOptions = (req, res) => {
 
 const getComments = async (req, res, next) => {
     try {
-        const comments = await Comments.find(req.query).populate('author').lean();
+        const comments = await Comments.find(req.query).populate('author');
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(comments);
@@ -25,7 +25,7 @@ const postComment = async (req, res, next) => {
     try {
         req.body.author = req.user._id;
         const newComment = await Comments.create(req.body);
-        const foundComment = await newComment.populate('author').lean();
+        const foundComment = await newComment.populate('author dish').execPopulate();
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(foundComment);
@@ -47,7 +47,7 @@ const deleteComment = async (req, res, next) => {
 
 const getCommentById = async (req, res, next) => {
     try {
-        const comments = await Comments.findById(req.params.id).populate('author').lean();
+        const comments = await Comments.findById(req.params.id).populate('author');
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(comments);
@@ -58,7 +58,7 @@ const getCommentById = async (req, res, next) => {
 
 const patchCommentById = async (req, res, next) => {
     try {
-        const comment = await Comments.findById(req.params.id).lean();
+        const comment = await Comments.findById(req.params.id);
         if (comment === null) {
             const err = new Error('Comment not found');
             err.status = 404;
@@ -71,7 +71,7 @@ const patchCommentById = async (req, res, next) => {
             next(err);
             return;
         }
-        const updatedComment = await Comments.findByIdAndUpdate(comment._id, {$set: req.body}, {new: true}).populate('author').lean();
+        const updatedComment = await Comments.findByIdAndUpdate(comment._id, {$set: req.body}, {new: true}).populate('author');
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(updatedComment);
@@ -82,7 +82,7 @@ const patchCommentById = async (req, res, next) => {
 
 const deleteCommentById = async (req, res, next) => {
     try {
-        const commentToDelete = await Comments.findById(req.params.id).lean();
+        const commentToDelete = await Comments.findById(req.params.id);
         if (!commentToDelete) {
             const err = new Error('Comment ' + req.params.id + ' not found');
             err.status = 404;

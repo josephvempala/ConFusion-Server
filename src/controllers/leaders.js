@@ -6,7 +6,7 @@ const leaderOptions = (req, res) => {
 
 const getLeaders = async (req, res, next) => {
     try {
-        const leaders = await Leaders.find(req.query).lean();
+        const leaders = await Leaders.find(req.query);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(leaders);
@@ -35,7 +35,7 @@ const deleteLeaders = async (req, res) => {
 
 const getLeaderByParam = async (req, res, next) => {
     try {
-        const leader = await Leaders.findById(req.params.id).lean();
+        const leader = await Leaders.findById(req.params.id);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(leader);
@@ -46,7 +46,7 @@ const getLeaderByParam = async (req, res, next) => {
 
 const patchLeaderByParam = async (req, res, next) => {
     try {
-        const updatedLeader = await Leaders.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true}).lean();
+        const updatedLeader = await Leaders.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true});
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(updatedLeader);

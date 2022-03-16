@@ -6,7 +6,7 @@ const promoOptions = (req, res) => {
 
 const getPromos = async (req, res, next) => {
     try {
-        const promos = await Promos.find(req.query).lean();
+        const promos = await Promos.find(req.query);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(promos);
@@ -17,7 +17,7 @@ const getPromos = async (req, res, next) => {
 
 const postPromo = async (req, res, next) => {
     try {
-        const newPromo = await Promos.create(req.body).lean();
+        const newPromo = await Promos.create(req.body);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(newPromo);
@@ -35,7 +35,7 @@ const deletePromos = async (req, res) => {
 
 const getPromoByParam = async (req, res, next) => {
     try {
-        const promo = await Promos.findById(req.params.id).lean();
+        const promo = await Promos.findById(req.params.id);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(promo);
@@ -46,7 +46,7 @@ const getPromoByParam = async (req, res, next) => {
 
 const patchPromoByParam = async (req, res, next) => {
     try {
-        const updatedPromo = await Promos.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true}).lean();
+        const updatedPromo = await Promos.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true});
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(updatedPromo);

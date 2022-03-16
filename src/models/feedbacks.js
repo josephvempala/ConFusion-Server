@@ -7,18 +7,25 @@ const FeedbackSchema = new Schema(
     {
         firstname: {
             type: String,
+            minLength: 2,
+            maxLength: 15,
             required: true,
         },
         lastname: {
             type: String,
+            minLength: 2,
+            maxLength: 15,
             required: false,
         },
         telnum: {
-            type: String,
+            type: Number,
+            min: 9,
+            max: 10,
             required: true,
         },
         email: {
             type: String,
+            validate: (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val),
             required: true,
         },
         agree: {

@@ -6,7 +6,7 @@ const favouritesOptions = (req, res) => {
 
 const getFavouritesByUser = async (req, res, next) => {
     try {
-        const favouritesByUser = await Favourites.findOne({user: req.user._id}).populate('user').populate('dishes').lean();
+        const favouritesByUser = await Favourites.findOne({user: req.user._id}).populate('user').populate('dishes');
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(favouritesByUser ?? {user: req.user._id, dishes: []});
@@ -20,7 +20,7 @@ const postFavourite = async (req, res, next) => {
         const favouritesByUser = await Favourites.findOne({user: req.user._id});
         if (!favouritesByUser) {
             const newFavourites = await Favourites.create({user: req.user._id, dishes: req.body});
-            const populatedNewFavourites = await newFavourites.populate('user').populate('dishes').lean();
+            const populatedNewFavourites = await newFavourites.populate('user').populate('dishes');
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json(populatedNewFavourites);
@@ -28,7 +28,7 @@ const postFavourite = async (req, res, next) => {
         }
         favouritesByUser.dishes.push(...req.body.filter((x) => !favouritesByUser.dishes.contains(x)));
         await favouritesByUser.save();
-        const populatedNewFavourites = await favouritesByUser.populate('user').populate('dishes').lean();
+        const populatedNewFavourites = await favouritesByUser.populate('user').populate('dishes');
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(populatedNewFavourites);
@@ -50,7 +50,7 @@ const deleteFavourites = async (req, res, next) => {
 
 const getFavouritesByParam = async (req, res, next) => {
     try {
-        const favourites = await Favourites.findOne({user: req.user._id}).lean();
+        const favourites = await Favourites.findOne({user: req.user._id});
         if (!favourites) {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
@@ -76,16 +76,16 @@ const postFavouritesByParam = async (req, res, next) => {
         const favourite = await Favourites.findOne({user: req.user._id});
         if (!favourite) {
             const newFavourites = await Favourites.create({user: req.user._id, dishes: [req.params.id]});
-            const populatedFavourites = await newFavourites.populate('user').populate('dishes').lean();
+            const populatedFavourites = await newFavourites.populate('user').populate('dishes');
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json(populatedFavourites);
             return;
         }
         if (favourite.dishes.indexOf(req.params.id) !== -1) {
-            await favourite.populate('user').populate('dishes');
             favourite.dishes.splice(favourite.dishes.indexOf(req.params.id), 1);
             await favourite.save();
+            await favourite.populate('user').populate('dishes');
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json(favourite);
@@ -93,7 +93,7 @@ const postFavouritesByParam = async (req, res, next) => {
         }
         favourite.dishes.push(req.params.id);
         await favourite.save();
-        const populatedFavourites = await favourite.populate('user').populate('dishes').lean();
+        const populatedFavourites = await Favourites.findById(favourite._id).populate('user').populate('dishes');
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(populatedFavourites);
@@ -118,7 +118,7 @@ const deleteFavouritesByParam = async (req, res, next) => {
     }
     favourite.dishes.splice(favourite.dishes.indexOf(req.params.id), 1);
     await favourite.save();
-    const populatedFavourite = await favourite.populate('user').populate('dishes').lean();
+    const populatedFavourite = await favourite.populate('user').populate('dishes');
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.json(populatedFavourite);

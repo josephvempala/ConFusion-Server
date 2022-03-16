@@ -8,7 +8,7 @@ const usersOptions = (req, res) => {
 
 const getUsers = async (req, res, next) => {
     try {
-        const users = await User.find({}).lean();
+        const users = await User.find({});
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(users);
@@ -61,7 +61,7 @@ const login = (req, res, next) => {
             const token = authenticate.getToken({_id: req.user._id});
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
-            res.json({success: true, status: 'Login Successful!', token: token});
+            res.json({success: true, status: 'Login Successful!', token: token, admin: req.user.admin});
         });
     })(req, res, next);
 };
