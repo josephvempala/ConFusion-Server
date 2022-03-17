@@ -19,8 +19,8 @@ const FeedbackSchema = new Schema(
         },
         telnum: {
             type: Number,
-            min: 9,
-            max: 10,
+            min: 0,
+            max: 9999999999,
             required: true,
         },
         email: {
